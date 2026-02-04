@@ -142,11 +142,11 @@ export default function ShortenerPage() {
               <Typography>
                 Short URL:{' '}
                 <a
-                  href={`${backendBaseUrl}${result.shortPath}`}
+                  href={`${backendBaseUrl}${result.shortcode}`}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {`${backendBaseUrl}${result.shortPath}`}
+                  {`${backendBaseUrl}${result.shortcode}`}
                 </a>
               </Typography>
               <Typography>Expires: {result.expiry}</Typography>
