@@ -13,21 +13,26 @@ import { axiosInstance } from './LoggingMiddleware';
 
 export default function StatsPage() {
   const [stats, setStats] = useState([]);
+  const backendBaseUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
-    const storedLinks = JSON.parse(sessionStorage.getItem('shortenedLinks') || '[]');
+    const storedLinks = JSON.parse(
+      sessionStorage.getItem('shortenedLinks') || '[]'
+    );
+
     const fetchStats = async () => {
       const results = [];
       for (const shortcode of storedLinks) {
         try {
           const res = await axiosInstance.get(`/shorturls/${shortcode}`);
-          results.push({ ...res.data, shortcode }); // ✅ Add shortcode to result
+          results.push(res.data);
         } catch (err) {
           console.error(err);
         }
       }
       setStats(results);
     };
+
     fetchStats();
   }, []);
 
@@ -44,11 +49,11 @@ export default function StatsPage() {
               <Typography variant="subtitle1">
                 Short URL:{' '}
                 <a
-                  href={`http://localhost:5000/${item.shortcode}`}
+                  href={`${backendBaseUrl}/${item.shortcode}`}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {`http://localhost:5000/${item.shortcode}`}
+                  {`${backendBaseUrl}/${item.shortcode}`}
                 </a>
               </Typography>
 

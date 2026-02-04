@@ -1,16 +1,17 @@
 import { nanoid } from 'nanoid';
 
-export const urlStore = {}; // In-memory DB
+const urlStore = {}; // in-memory DB
 
 export function createShortUrl(originalUrl, customCode, validityMins) {
-  let shortcode = customCode || nanoid(6);
+  const shortcode = customCode || nanoid(6);
+
   if (urlStore[shortcode]) {
     throw new Error('Shortcode already exists');
   }
 
   const createdAt = new Date();
-  const minutes = parseInt(validityMins);
-  const safeValidity = isNaN(minutes) || minutes <= 0 ? 30 : minutes;
+  const minutes = Number(validityMins);
+  const safeValidity = !minutes || minutes <= 0 ? 30 : minutes;
   const expiresAt = new Date(createdAt.getTime() + safeValidity * 60000);
 
   urlStore[shortcode] = {

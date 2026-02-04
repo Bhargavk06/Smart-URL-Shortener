@@ -13,10 +13,14 @@ import {
 import { axiosInstance } from './LoggingMiddleware';
 
 export default function ShortenerPage() {
-  const [urls, setUrls] = useState([{ originalUrl: '', validity: '', customCode: '' }]);
+  const [urls, setUrls] = useState([
+    { originalUrl: '', validity: '', customCode: '' },
+  ]);
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const backendBaseUrl = process.env.REACT_APP_API_URL;
 
   const handleChange = (index, field, value) => {
     const updated = [...urls];
@@ -52,16 +56,6 @@ export default function ShortenerPage() {
         setLoading(false);
         return;
       }
-      if (validity && (isNaN(validity) || parseInt(validity) <= 0)) {
-        setError(`Invalid validity for: ${originalUrl}`);
-        setLoading(false);
-        return;
-      }
-      if (customCode && !/^[a-zA-Z0-9]+$/.test(customCode)) {
-        setError(`Custom code must be alphanumeric for: ${originalUrl}`);
-        setLoading(false);
-        return;
-      }
 
       try {
         const res = await axiosInstance.post('/shorturls', {
@@ -72,8 +66,10 @@ export default function ShortenerPage() {
 
         newResults.push(res.data);
 
-        // Save shortcode for stats page
-        const stored = JSON.parse(sessionStorage.getItem('shortenedLinks') || '[]');
+        // store shortcode for stats page
+        const stored = JSON.parse(
+          sessionStorage.getItem('shortenedLinks') || '[]'
+        );
         stored.push(res.data.shortcode);
         sessionStorage.setItem('shortenedLinks', JSON.stringify(stored));
       } catch (err) {
@@ -103,7 +99,9 @@ export default function ShortenerPage() {
                 label="Original URL"
                 fullWidth
                 value={url.originalUrl}
-                onChange={(e) => handleChange(index, 'originalUrl', e.target.value)}
+                onChange={(e) =>
+                  handleChange(index, 'originalUrl', e.target.value)
+                }
               />
             </Grid>
             <Grid item xs={6} md={3}>
@@ -111,7 +109,9 @@ export default function ShortenerPage() {
                 label="Validity (mins)"
                 fullWidth
                 value={url.validity}
-                onChange={(e) => handleChange(index, 'validity', e.target.value)}
+                onChange={(e) =>
+                  handleChange(index, 'validity', e.target.value)
+                }
               />
             </Grid>
             <Grid item xs={6} md={3}>
@@ -119,7 +119,9 @@ export default function ShortenerPage() {
                 label="Custom Shortcode"
                 fullWidth
                 value={url.customCode}
-                onChange={(e) => handleChange(index, 'customCode', e.target.value)}
+                onChange={(e) =>
+                  handleChange(index, 'customCode', e.target.value)
+                }
               />
             </Grid>
           </Grid>
@@ -138,7 +140,14 @@ export default function ShortenerPage() {
             <Card key={idx} sx={{ p: 2, my: 1 }}>
               <Typography>Original: {result.originalUrl}</Typography>
               <Typography>
-                Short URL: <a href={result.shortUrl}>{result.shortUrl}</a>
+                Short URL:{' '}
+                <a
+                  href={`${backendBaseUrl}${result.shortPath}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {`${backendBaseUrl}${result.shortPath}`}
+                </a>
               </Typography>
               <Typography>Expires: {result.expiry}</Typography>
             </Card>

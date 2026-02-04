@@ -1,13 +1,20 @@
 import express from 'express';
+import cors from 'cors';
 import { customLogger } from './logger.js';
-import { createShortUrl, getShortUrl, isExpired, logClick } from './shortener.js';
-import cors from 'cors'; 
-const app = express();
-const PORT = 5000;
+import {
+  createShortUrl,
+  getShortUrl,
+  isExpired,
+  logClick
+} from './shortener.js';
 
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+app.set('trust proxy', true);
 app.use(express.json());
 app.use(customLogger);
-app.use(cors());
+app.use(cors({ origin: '*' }));
 
 // Create short URL
 app.post('/shorturls', (req, res) => {
@@ -18,7 +25,7 @@ app.post('/shorturls', (req, res) => {
   }
 
   try {
-    const urlObj = new URL(originalUrl); // Validate URL
+    new URL(originalUrl);
   } catch {
     return res.status(400).json({ error: 'Invalid URL format' });
   }
@@ -33,33 +40,14 @@ app.post('/shorturls', (req, res) => {
   res.json({
     originalUrl: entry.originalUrl,
     shortcode: entry.shortcode,
-    shortUrl: `http://localhost:${PORT}/${entry.shortcode}`,
+    shortPath: `/${entry.shortcode}`,
     expiry: entry.expiresAt
   });
 });
 
-//Redirect
-app.get('/:shortcode', (req, res) => {
-  const shortcode = req.params.shortcode;
-  const entry = getShortUrl(shortcode);
-
-  if (!entry) {
-    return res.status(404).json({ error: 'Shortcode not found' });
-  }
-
-  if (isExpired(entry)) {
-    return res.status(410).json({ error: 'Link expired' });
-  }
-
-  logClick(entry, req);
-
-  res.redirect(302, entry.originalUrl);
-});
-
-// Stats
+// Stats (specific route FIRST)
 app.get('/shorturls/:shortcode', (req, res) => {
-  const shortcode = req.params.shortcode;
-  const entry = getShortUrl(shortcode);
+  const entry = getShortUrl(req.params.shortcode);
 
   if (!entry) {
     return res.status(404).json({ error: 'Shortcode not found' });
@@ -75,6 +63,22 @@ app.get('/shorturls/:shortcode', (req, res) => {
   });
 });
 
+// Redirect (generic route LAST)
+app.get('/:shortcode', (req, res) => {
+  const entry = getShortUrl(req.params.shortcode);
+
+  if (!entry) {
+    return res.status(404).json({ error: 'Shortcode not found' });
+  }
+
+  if (isExpired(entry)) {
+    return res.status(410).json({ error: 'Link expired' });
+  }
+
+  logClick(entry, req);
+  res.redirect(302, entry.originalUrl);
+});
+
 app.listen(PORT, () => {
-  console.info(`URL Shortener running at http://localhost:${PORT}`);
+  console.info(`URL Shortener running on port ${PORT}`);
 });
