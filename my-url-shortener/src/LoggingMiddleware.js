@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create custom axios instance
 export const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: process.env.REACT_APP_API_URL,
 });
 
 // Request logging
