@@ -1,0 +1,15 @@
+# Backend (Java / Spring Boot)
+backend/target/
+backend/bin/
+backend/.settings/
+backend/.classpath
+backend/.project
+
+# Frontend (React / Node)
+my-url-shortener/node_modules/
+my-url-shortener/build/
+my-url-shortener/.env
+
+# General
+*.log
+.DS_Store
