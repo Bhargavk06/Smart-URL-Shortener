@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -9,16 +9,16 @@ import {
   Snackbar,
   Alert,
   CircularProgress,
-} from '@mui/material';
-import { axiosInstance } from './LoggingMiddleware';
+} from "@mui/material";
+import { axiosInstance } from "./LoggingMiddleware";
 
 export default function ShortenerPage() {
   const [urls, setUrls] = useState([
-    { originalUrl: '', validity: '', customCode: '' },
+    { originalUrl: "", validity: "", customCode: "" },
   ]);
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const backendBaseUrl = process.env.REACT_APP_API_URL;
 
@@ -30,7 +30,7 @@ export default function ShortenerPage() {
 
   const handleAddField = () => {
     if (urls.length < 5) {
-      setUrls([...urls, { originalUrl: '', validity: '', customCode: '' }]);
+      setUrls([...urls, { originalUrl: "", validity: "", customCode: "" }]);
     }
   };
 
@@ -44,7 +44,7 @@ export default function ShortenerPage() {
   };
 
   const handleSubmit = async () => {
-    setError('');
+    setError("");
     setLoading(true);
     const newResults = [];
 
@@ -58,23 +58,21 @@ export default function ShortenerPage() {
       }
 
       try {
-        const res = await axiosInstance.post('/shorturls', {
+        const res = await axiosInstance.post("/shorturls", {
           originalUrl,
           validity: validity ? parseInt(validity) : undefined,
           customCode,
         });
 
         newResults.push(res.data);
-
-        // store shortcode for stats page
         const stored = JSON.parse(
-          sessionStorage.getItem('shortenedLinks') || '[]'
+          sessionStorage.getItem("shortenedLinks") || "[]",
         );
         stored.push(res.data.shortcode);
-        sessionStorage.setItem('shortenedLinks', JSON.stringify(stored));
+        sessionStorage.setItem("shortenedLinks", JSON.stringify(stored));
       } catch (err) {
         setError(
-          err.response?.data?.error || 'Something went wrong, check backend.'
+          err.response?.data?.error || "Something went wrong, check backend.",
         );
         setLoading(false);
         return;
@@ -100,7 +98,7 @@ export default function ShortenerPage() {
                 fullWidth
                 value={url.originalUrl}
                 onChange={(e) =>
-                  handleChange(index, 'originalUrl', e.target.value)
+                  handleChange(index, "originalUrl", e.target.value)
                 }
               />
             </Grid>
@@ -110,7 +108,7 @@ export default function ShortenerPage() {
                 fullWidth
                 value={url.validity}
                 onChange={(e) =>
-                  handleChange(index, 'validity', e.target.value)
+                  handleChange(index, "validity", e.target.value)
                 }
               />
             </Grid>
@@ -120,41 +118,66 @@ export default function ShortenerPage() {
                 fullWidth
                 value={url.customCode}
                 onChange={(e) =>
-                  handleChange(index, 'customCode', e.target.value)
+                  handleChange(index, "customCode", e.target.value)
                 }
               />
             </Grid>
           </Grid>
         ))}
 
-        <Button onClick={handleAddField} disabled={urls.length >= 5} sx={{ mr: 2 }}>
+        <Button
+          onClick={handleAddField}
+          disabled={urls.length >= 5}
+          sx={{ mr: 2 }}
+        >
           Add Another
         </Button>
 
         <Button variant="contained" onClick={handleSubmit} disabled={loading}>
-          {loading ? <CircularProgress size={24} /> : 'Shorten'}
+          {loading ? <CircularProgress size={24} /> : "Shorten"}
         </Button>
 
         <div style={{ marginTop: 20 }}>
-          {results.map((result, idx) => (
-            <Card key={idx} sx={{ p: 2, my: 1 }}>
-              <Typography>Original: {result.originalUrl}</Typography>
-              <Typography>
-                Short URL:{' '}
-                <a
-                  href={`${backendBaseUrl}${result.shortcode}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {`${backendBaseUrl}${result.shortcode}`}
-                </a>
-              </Typography>
-              <Typography>Expires: {result.expiry}</Typography>
-            </Card>
-          ))}
+          {results.map((result, idx) => {
+            // Calculating the clickable Full Link (Required for the browser)
+            const cleanBaseUrl = backendBaseUrl.replace(/\/$/, "");
+            const fullLink = `${cleanBaseUrl}/${result.shortcode}`;
+
+            // Definining what to SHOW to the user
+            const displayText = `/${result.shortcode}`;
+
+            return (
+              <Card key={idx} sx={{ p: 2, my: 1 }}>
+                <Typography>Original: {result.originalUrl}</Typography>
+                <Typography>
+                  Short URL:{" "}
+                  <a
+                    href={fullLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      fontWeight: "bold",
+                      textDecoration: "none",
+                      color: "#1976d2",
+                    }}
+                  >
+                    {displayText} 
+                  </a>
+                </Typography>
+                <Typography variant="caption" color="textSecondary">
+                  (Clicking above redirects via your backend)
+                </Typography>
+                <Typography>Expires: {result.expiry}</Typography>
+              </Card>
+            );
+          })}
         </div>
 
-        <Snackbar open={!!error} autoHideDuration={5000} onClose={() => setError('')}>
+        <Snackbar
+          open={!!error}
+          autoHideDuration={5000}
+          onClose={() => setError("")}
+        >
           <Alert severity="error">{error}</Alert>
         </Snackbar>
       </CardContent>
