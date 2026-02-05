@@ -84,10 +84,10 @@ npm start  # Run Frontend
 
 ---
 
-### Author
+## Author
 
--Bhargav Sai
--Github: https://github.com/Bhargavk06
--LinkedIn: https://www.linkedin.com/in/bhargavsai06/
+Bhargav Sai  
+GitHub: https://github.com/Bhargavk06  
+LinkedIn: https://www.linkedin.com/in/bhargavsai06/
 
 
