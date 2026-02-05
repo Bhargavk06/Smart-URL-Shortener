@@ -16,17 +16,17 @@ Live Demo
 
 Features
 
-✅ Shorten up to **5 URLs** at once  
-✅ Custom shortcode support (example: `/bhargav`)  
-✅ URL validity / expiry support (in minutes)  
-✅ Redirects short URLs to the original URL  
-✅ Click tracking (timestamp, referrer, IP)  
-✅ Statistics page to view analytics  
-✅ Environment-based deployment support (no localhost issues)
+Shorten up to **5 URLs** at once  
+Custom shortcode support (example: `/bhargav`)  
+URL validity / expiry support (in minutes)  
+Redirects short URLs to the original URL  
+Click tracking (timestamp, referrer, IP)  
+Statistics page to view analytics  
+Environment-based deployment support (no localhost issues)
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Frontend
 - React.js
@@ -41,7 +41,7 @@ Features
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```bash
 Smart-URL-Shortener/
