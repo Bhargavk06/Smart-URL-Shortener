@@ -10,19 +10,18 @@ Live Demo
 - **Frontend (Vercel):** https://<your-frontend-link>.vercel.app  
 - **Backend (Render):** https://<your-backend-link>.onrender.com  
 
-> Replace the above links with your deployed URLs.
 
 ---
 
 Features
 
-Shorten up to **5 URLs** at once  
-Custom shortcode support (example: `/bhargav`)  
-URL validity / expiry support (in minutes)  
-Redirects short URLs to the original URL  
-Click tracking (timestamp, referrer, IP)  
-Statistics page to view analytics  
-Environment-based deployment support (no localhost issues)
+-Shorten up to **5 URLs** at once  
+- Custom shortcode support (example: `/bhargav`)  
+- URL validity / expiry support (in minutes)  
+- Redirects short URLs to the original URL  
+- Click tracking (timestamp, referrer, IP)  
+- Statistics page to view analytics  
+- Environment-based deployment support (no localhost issues)
 
 ---
 
