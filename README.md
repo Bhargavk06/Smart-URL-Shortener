@@ -1,11 +1,11 @@
-*** Smart URL Shortener ***
+## Smart URL Shortener 
 
 A full-stack application built using **React + Material UI** for the frontend and **Node.js + Express** for the backend.  
 It supports generating short URLs with custom shortcodes, expiry time, redirection, and click analytics.
 
 ---
 
-Live Demo
+## Live Demo
 
 - **Frontend (Vercel):** https://smart-url-shortener.vercel.app/
 - **Backend (Render):** https://smart-url-shortener-oe5f.onrender.com
@@ -13,7 +13,7 @@ Live Demo
 
 ---
 
-Features
+## Features
 
 Shorten up to **5 URLs** at once  
 - Custom shortcode support (example: `/bhargav`)  
@@ -61,24 +61,24 @@ Smart-URL-Shortener/
 
 ---
 
-***Installation & Setup (Local Development) ***
-** 1. Clone Reposiotry **
+## Installation & Setup (Local Development) 
+### 1. Clone Reposiotry 
 git clone https://github.com/Bhargavk06/Smart-URL-Shortener.git
 cd Smart-URL-Shortener
 
-** 2. Backend Setup (Node.js + Express) **
+### 2. Backend Setup (Node.js + Express) 
  cd backend  # Move to Backend Folder
  npm install # Install Dependencies
  npm start  # Run Backend Server
 
-** 3. Frontend Setup (React + MUI) **
+### 3. Frontend Setup (React + MUI) 
 cd ../my-url-shortener   # Move to Frontend Folder
 npm install              # Install Dependencies
 REACT_APP_API_URL=http://localhost:5000 # Create .env File
 npm start  # Run Frontend
 
 
-***Author***
+### Author
 Bhargav Sai
 Github: https://github.com/Bhargavk06
 
