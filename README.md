@@ -1,7 +1,15 @@
 ## Smart URL Shortener 
 
-A full-stack application built using **React + Material UI** for the frontend and **Node.js + Express** for the backend.  
-It supports generating short URLs with custom shortcodes, expiry time, redirection, and click analytics.
+Smart URL Shortener is a full-stack web application that allows users to generate short links for long URLs.  
+Users can optionally provide a custom shortcode and set an expiry time. The application also tracks click analytics such as timestamp, IP address, and referrer, and displays detailed statistics through a dashboard.
+
+## How It Works
+
+1. User enters a long URL in the frontend.
+2. Backend generates a unique shortcode (or accepts a custom one).
+3. The backend stores the mapping between the shortcode and the original URL.
+4. When the short URL is opened, the backend redirects the user to the original URL.
+5. Each redirect is logged for analytics and shown in the statistics page.
 
 ---
 
