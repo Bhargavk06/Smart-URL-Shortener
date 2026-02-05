@@ -85,6 +85,7 @@ npm start  # Run Frontend
 ---
 
 ### Author
+
 -Bhargav Sai
 -Github: https://github.com/Bhargavk06
 -LinkedIn: https://www.linkedin.com/in/bhargavsai06/
