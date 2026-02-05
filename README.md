@@ -63,19 +63,24 @@ Smart-URL-Shortener/
 
 ## Installation & Setup (Local Development) 
 ### 1. Clone Reposiotry 
+``` bash
 git clone https://github.com/Bhargavk06/Smart-URL-Shortener.git
 cd Smart-URL-Shortener
-
+```
 ### 2. Backend Setup (Node.js + Express) 
+``` bash
  cd backend  # Move to Backend Folder
  npm install # Install Dependencies
  npm start  # Run Backend Server
+```
 
 ### 3. Frontend Setup (React + MUI) 
+``` bash
 cd ../my-url-shortener   # Move to Frontend Folder
 npm install              # Install Dependencies
 REACT_APP_API_URL=http://localhost:5000 # Create .env File
 npm start  # Run Frontend
+```
 
 
 ### Author
