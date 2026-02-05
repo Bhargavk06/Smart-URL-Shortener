@@ -1,7 +1,7 @@
 ## Smart URL Shortener 
 
 Smart URL Shortener is a full-stack web application that allows users to generate short links for long URLs.  
-Users can optionally provide a custom shortcode and set an expiry time. The application also tracks click analytics such as timestamp, IP address, and referrer, and displays detailed statistics through a dashboard.
+Users can optionally provide a custom shortcode and set an expiry time. The application also tracks click analytics such as total number of clicks and timestamps for each visit, and displays the statistics in a dashboard.
 
 ## How It Works
 
